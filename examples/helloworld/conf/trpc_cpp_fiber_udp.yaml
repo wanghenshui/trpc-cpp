@@ -16,7 +16,7 @@ server:
   service:
     - name: trpc.test.helloworld.Greeter
       protocol: trpc                  # Application layer protocol, eg: trpc/http/...
-      network: tcp                    # Network type, Support two types: tcp/udp
+      network: udp                    # Network type, Support two types: tcp/udp
       ip: 0.0.0.0                     # Service bind ip
       port: 12345                     # Service bind port
 

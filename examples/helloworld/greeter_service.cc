@@ -25,11 +25,12 @@ namespace helloworld {
                                             const ::trpc::test::helloworld::HelloRequest* request,
                                             ::trpc::test::helloworld::HelloReply* reply) {
   // Your can access more information from rpc context, eg: remote ip and port
-  TRPC_FMT_INFO("remote address: {}:{}", context->GetIp(), context->GetPort());
-  TRPC_FMT_INFO("request message: {}", request->msg());
+  //TRPC_FMT_INFO("remote address: {}:{}", context->GetIp(), context->GetPort());
+  //TRPC_FMT_INFO("request message: {}", request->msg());
 
-  std::string response = "Hello, " + request->msg();
-  reply->set_msg(response);
+  //reply->set_msg("ok");
+  reply->set_msg(request->msg());
+
 
   return ::trpc::kSuccStatus;
 }

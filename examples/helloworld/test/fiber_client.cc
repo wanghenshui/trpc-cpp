@@ -25,18 +25,23 @@
 
 DEFINE_string(client_config, "trpc_cpp.yaml", "framework client_config file, --client_config=trpc_cpp.yaml");
 DEFINE_string(service_name, "trpc.test.helloworld.Greeter", "callee service name");
-
+DEFINE_int32(req_num,400000, "req");
+DEFINE_int32(batch_size,65000,"batch");
 int DoRpcCall(const std::shared_ptr<::trpc::test::helloworld::GreeterServiceProxy>& proxy) {
   ::trpc::ClientContextPtr client_ctx = ::trpc::MakeClientContext(proxy);
   ::trpc::test::helloworld::HelloRequest req;
-  req.set_msg("fiber");
+  std::string rr(FLAGS_batch_size, 'x');
+  req.set_msg(rr);
+  while (FLAGS_req_num-- > 0) {
   ::trpc::test::helloworld::HelloReply rsp;
   ::trpc::Status status = proxy->SayHello(client_ctx, req, &rsp);
   if (!status.OK()) {
     std::cerr << "get rpc error: " << status.ErrorMessage() << std::endl;
     return -1;
   }
-  std::cout << "get rsp msg: " << rsp.msg() << std::endl;
+  
+  //std::cout << "get rsp msg: " << rsp.msg() << std::endl;
+  }
   return 0;
 }
 
