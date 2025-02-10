@@ -12,12 +12,13 @@
 //
 
 #include "examples/helloworld/greeter_service.h"
-
+#include "gflags/gflags.h"
 #include <string>
 
 #include "trpc/common/status.h"
 #include "trpc/log/trpc_log.h"
 
+DEFINE_bool(is_echo, false, "echo");
 namespace test {
 namespace helloworld {
 
@@ -28,9 +29,11 @@ namespace helloworld {
   //TRPC_FMT_INFO("remote address: {}:{}", context->GetIp(), context->GetPort());
   //TRPC_FMT_INFO("request message: {}", request->msg());
 
-  //reply->set_msg("ok");
+  if (!FLAGS_is_echo) {
+	  reply->set_msg("ok");
+  } else {
   reply->set_msg(request->msg());
-
+	}
 
   return ::trpc::kSuccStatus;
 }
